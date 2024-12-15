@@ -25,7 +25,7 @@ import java.util.{Collection => JavaCollection}
 import org.apache.commons.lang3.Validate
 import org.apache.wayang.api.util.DataQuantaBuilderCache
 import org.apache.wayang.basic.data.Record
-import org.apache.wayang.basic.operators.{TableSource, TextFileSource, KafkaTopicSource}
+import org.apache.wayang.basic.operators.{TableSource, TextFileSource, KafkaTopicSource, ParquetSource}
 import org.apache.wayang.commons.util.profiledb.model.Experiment
 import org.apache.wayang.core.api.WayangContext
 import org.apache.wayang.core.plan.wayangplan._
@@ -36,6 +36,7 @@ import scala.reflect.ClassTag
 /**
   * Utility to build and execute [[WayangPlan]]s.
   */
+// It operates over the PlanBuilder class, which is used to build and execute WayangPlans.
 class JavaPlanBuilder(wayangCtx: WayangContext, jobName: String) {
 
   def this(wayangContext: WayangContext) = this(wayangContext, null)
@@ -61,6 +62,19 @@ class JavaPlanBuilder(wayangCtx: WayangContext, jobName: String) {
     */
   def readTextFile(url: String): UnarySourceDataQuantaBuilder[UnarySourceDataQuantaBuilder[_, String], String] =
   createSourceBuilder(new TextFileSource(url))(ClassTag(classOf[String]))
+
+  /**
+   * Read a Parquet file and provide it as a dataset of [[String]]s.
+   *
+   * @param url the URL of the Parquet file
+   * @return [[DataQuantaBuilder]] for the file
+   */
+  // The createSourceBuilder method is used to create a source builder for the Parquet file.
+  // Specifically, it creates a ParquetSource object and passes it to the createSourceBuilder method.
+  // Here we specify that we return strings from the Parquet file.
+  def readParquetFile(url: String): UnarySourceDataQuantaBuilder[UnarySourceDataQuantaBuilder[_, String], String] =
+    createSourceBuilder(new ParquetSource(url))(ClassTag(classOf[String]))
+
 
   /**
    * Read a textmessages from a Kafka topic and provide it as a dataset of [[String]]s, one per message.
