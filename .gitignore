@@ -34,3 +34,6 @@ pom.xml.*
 
 # Scala Plugin for VSCode
 .metals
+
+# Allow only .java files
+.m2
