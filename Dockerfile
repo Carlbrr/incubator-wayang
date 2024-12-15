@@ -1,11 +1,9 @@
 #Special thanks to Mads Cornelius for the help..
 # Tried with both docker compose as per the official guide: https://wayang.apache.org/docs/guide/wayang-docker
-# Did not make anything easy - unlicensed errors, even when trying to force it through.
-# Tried with the offical docker image as described in: https://github.com/juripetersen/d3a-hackathon-wayang
-# Spoiler: did not work either.
-# Insight, everything must be installed before we try to do anything at all, which you would think was the whole idea of containerizing such a system. 
+# Did not make anything easy - unlicensed errors.
+# Tried with the offical docker image as described in: https://github.com/juripetersen/d3a-hackathon-wayang - did not work either.
 
-# Final look: pull java 11 base image with the dependencies required here
+# Alternative: pull java 11 base image with the dependencies required here
 # then install maven, move to correct folder, and add to path
 # Then install:
     #Spark
@@ -38,7 +36,7 @@ RUN curl -O https://dlcdn.apache.org/hadoop/common/hadoop-3.4.0/hadoop-3.4.0-aar
     tar -xvf hadoop-3.4.0-aarch64.tar.gz && \
     chmod -R 777 /opt/hadoop
 
-# Coursier Installation - might be unneccesary
+# Coursier Installation - might be unneccesary - it is
 WORKDIR /opt/coursier
 RUN curl -fL https://github.com/VirtusLab/coursier-m1/releases/latest/download/cs-aarch64-pc-linux.gz --output cs.gz && \
     cat cs.gz | gzip -d > cs && chmod +x cs && mv cs /usr/local/bin/

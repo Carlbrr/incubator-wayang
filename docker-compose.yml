@@ -1,8 +1,8 @@
-name: apache-wayang
+name: apache-wayang2
 
 services:
   app:
-    container_name: apache-wayang-app
+    container_name: apache-wayang-appJA
     image: apache/incubator-wayang:latest
     ports:
       - 8888:8888
