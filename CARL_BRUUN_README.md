@@ -46,8 +46,9 @@ $ docker compose up -d
 
 $ docker exec -it apache-wayang-appJA bash
 
-$ mvn clean install -DskipTests -Drat.skip=true -Dmaven.javadoc.skip=true -Djacoco.skip=true
-
+// Note that you need to disable RAT licensing checks as well as aggregate add third party (also licensing issues) to build
+// Other skips are just to make rebuild faster
+$ mvn clean install -DskipTests -Drat.skip=true -Dmaven.javadoc.skip=true -Djacoco.skip=true -Dlicense.skipAggregateAddThirdParty=true
 $ mvn clean package -pl :wayang-assembly -Pdistribution
 
 // in folder wayang-assembly/target
