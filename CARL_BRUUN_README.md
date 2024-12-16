@@ -1,38 +1,39 @@
 # Adding a Parquet Source Operator in Apache Wayang
 
 **Author: Carl Bruun (carbr@itu.dk)**
+
 This repository includes all changes made in Wayang in accordance with project-3 of Advanced Data Systems at ITU (2024, MSc., ComSci).
 
 
 Folders changed/added: 
--- **/parquet-reader** 
+- **/parquet-reader** 
 Contains standalone Java program to read Parquet files with Avro-Parquet and return records to std output
--- **/wayang-commons**
+- **/wayang-commons**
 Added the source operator, ParquetSource.java
--- **/wayang-platforms/wayang-java**
+- **/wayang-platforms/wayang-java**
 Added:
---- The java specific text source operator, JavaParquetSource.java
---- A new mapping class between the source operator and execution operator, ParquetSourceMapping.java
---- Updated the Mappings.java to register the new operator mapping.
--- **wayang-api**
+  - The java specific text source operator, JavaParquetSource.java
+  - A new mapping class between the source operator and execution operator, ParquetSourceMapping.java
+  - Updated the Mappings.java to register the new operator mapping.
+- **wayang-api**
 Updated the JavaPlanBuilder.java as to register the new operator as an endpoint (enables use in pipelines)
--- **/wayang-api**
+- **/wayang-benchmark**
 Added four pipelines that each iterates 6 times, and returns the avg execution time (not including the first run which is much higher - heavily afftected by warm-up or caching cost I assume):
---- ParquetSourceWithJava.java: a simple read and return pipe for Parquet
---- TextFileSourceWithJava.java: a simple read and return pipe for textfiles (CSV tested in this case)
---- ParquetSourceRegionCount.java: a bit more complex read and count region-nation counts on SSB "customer" tables in Parquet format. Returns a count for each combination
---- TextSourceRegionCount.java: a bit more complex read and count region-nation counts on SSB "customer" tables in .CSV format (or another txt file). Returns a count for each combination
+  - ParquetSourceWithJava.java: a simple read and return pipe for Parquet
+  - TextFileSourceWithJava.java: a simple read and return pipe for textfiles (CSV tested in this case)
+  - ParquetSourceRegionCount.java: a bit more complex read and count region-nation counts on SSB "customer" tables in Parquet format. Returns a count for each combination
+  - TextSourceRegionCount.java: a bit more complex read and count region-nation counts on SSB "customer" tables in .CSV format (or another txt file). Returns a count for each combination
 
 ## How To Run:
--- **Dockerfiler**
+- **Dockerfiler**
 The Dockerfile installs all required dependencies manually and sets environment variables:
---- Java 11
---- Maven
---- Spark
---- Hadoop
+  - Java 11
+  - Maven
+  - Spark
+  - Hadoop
 It then mounts the locally cloned repository into the container
 
--- **docker-compose**
+- **docker-compose**
 Includes Wayang base-image and all dependencies
 Do note that, when building -Drat.skip=true must be included to skip rat license checks.
 
